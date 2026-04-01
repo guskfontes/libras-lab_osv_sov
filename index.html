@@ -20,7 +20,7 @@
         /* Estilo do Visor Principal (Dark Mode Navy) */
         .main-display {
             background-color: #1e293b;
-            min-height: 500px;
+            min-height: 520px;
             border-radius: 1.5rem;
             display: flex;
             align-items: center;
@@ -32,14 +32,14 @@
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
         }
 
-        /* Botões conforme imagem do professor */
-        .btn-purple { background-color: #5e5ce6; transition: all 0.2s; }
+        /* Cores dos Botões (Conforme imagem enviada) */
+        .btn-purple { background-color: #5e5ce6; transition: all 0.2s; color: white; font-weight: 700; border-radius: 0.75rem; }
         .btn-purple:hover { background-color: #4b49c7; transform: translateY(-1px); }
 
-        .btn-orange { background-color: #f7a21c; transition: all 0.2s; }
+        .btn-orange { background-color: #f7a21c; transition: all 0.2s; color: white; font-weight: 700; border-radius: 0.75rem; }
         .btn-orange:hover { background-color: #e59116; transform: translateY(-1px); }
 
-        .btn-teal { background-color: #1db978; transition: all 0.2s; }
+        .btn-teal { background-color: #1db978; transition: all 0.2s; color: white; font-weight: 700; border-radius: 0.75rem; }
         .btn-teal:hover { background-color: #18a369; transform: translateY(-1px); }
 
         .custom-input {
@@ -55,7 +55,7 @@
             box-shadow: 0 0 0 3px rgba(94, 92, 230, 0.1);
         }
 
-        /* Estilização da Resposta da IA */
+        /* Estilização da Resposta da IA no Visor */
         .ai-content {
             color: #f1f5f9;
             width: 100%;
@@ -64,56 +64,54 @@
             overflow-y: auto;
         }
         .ai-content h2 { color: #5e5ce6; font-weight: 700; margin-bottom: 1.5rem; font-size: 1.5rem; border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
-        .ai-content .dialog-line { margin-bottom: 1.25rem; border-left: 4px solid #5e5ce6; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 0 0.5rem 0.5rem 0; }
+        .ai-content .dialog-line { margin-bottom: 1.25rem; border-left: 4px solid #5e5ce6; padding: 1.25rem; background: rgba(255,255,255,0.03); border-radius: 0 0.75rem 0.75rem 0; }
         .ai-content .libras-tag { 
             display: inline-block; 
             background: #334155; 
             color: #1db978; 
-            padding: 4px 10px; 
+            padding: 4px 12px; 
             border-radius: 6px; 
-            font-size: 0.85rem; 
-            font-weight: bold;
-            margin-top: 8px;
+            font-size: 0.8rem; 
+            font-weight: 800;
+            margin-top: 10px;
+            text-transform: uppercase;
         }
         .ai-content p { margin-bottom: 1rem; line-height: 1.6; }
 
-        /* Loading Spinner */
+        /* Animação de Carregamento */
         .loader {
             border: 4px solid #334155;
             border-top: 4px solid #5e5ce6;
             border-radius: 50%;
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        @media (max-width: 768px) {
-            .p-6 { padding: 1rem; }
-            .main-display { min-height: 400px; padding: 1.5rem; }
+        @media (max-width: 1024px) {
+            .p-12 { padding: 1.5rem; }
+            .main-display { min-height: 400px; }
         }
     </style>
 </head>
 <body class="p-6 md:p-12">
 
     <div class="max-w-7xl mx-auto">
-        <!-- Título Principal -->
-        <header class="mb-12">
-            <h1 class="text-3xl md:text-4xl font-bold text-[#5e5ce6] flex items-center gap-3">
-                <span class="border-l-4 border-[#5e5ce6] pl-4">Laboratório de Prática</span> ✨
+        <header class="mb-10">
+            <h1 class="text-3xl md:text-5xl font-bold text-[#5e5ce6] flex items-center gap-3">
+                <span class="border-l-4 border-[#5e5ce6] pl-4 uppercase tracking-tight">Laboratório de Prática</span> ✨
             </h1>
-            <p class="text-slate-400 mt-2 ml-5 text-sm uppercase tracking-widest font-semibold">Ensino Bilíngue - Libras / PUC-SP / Derdic</p>
+            <p class="text-slate-400 mt-2 ml-5 text-sm uppercase tracking-[0.2em] font-bold">Ensino Bilíngue - Libras / PUC-SP / Derdic</p>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 items-start">
             
-            <!-- Sidebar de Ferramentas -->
-            <div class="space-y-8 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+            <div class="space-y-8 bg-slate-50 p-7 rounded-3xl border border-slate-100 shadow-sm">
                 
-                <!-- Tema -->
                 <div>
-                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Tema para Diálogo/Cenário:</label>
-                    <select id="themeSelect" class="custom-input bg-white font-semibold text-slate-700 shadow-sm">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Tema do Exercício:</label>
+                    <select id="themeSelect" class="custom-input bg-white font-bold text-slate-700 shadow-sm text-sm">
                         <option value="Cores Primárias">Cores Primárias</option>
                         <option value="Família e Parentesco">Família e Parentesco</option>
                         <option value="Saudações e Apresentação">Saudações e Apresentação</option>
@@ -124,50 +122,46 @@
                     </select>
                 </div>
 
-                <!-- Botões de Geração -->
                 <div class="space-y-4">
-                    <button id="btnDialogue" onclick="handleAI('dialogue')" class="btn-purple w-full text-white font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center gap-2">
-                        <i class="fas fa-comments"></i> Gerar Novo Diálogo ✨
+                    <button id="btnDialogue" onclick="handleAI('dialogue')" class="btn-purple w-full py-4 px-6 shadow-xl flex items-center justify-center gap-3">
+                        <i class="fas fa-comments text-lg"></i> Gerar Novo Diálogo ✨
                     </button>
 
-                    <button id="btnScenario" onclick="handleAI('scenario')" class="btn-orange w-full text-white font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center gap-2">
-                        <i class="fas fa-image"></i> Criar Cenário ✨
+                    <button id="btnScenario" onclick="handleAI('scenario')" class="btn-orange w-full py-4 px-6 shadow-xl flex items-center justify-center gap-3">
+                        <i class="fas fa-image text-lg"></i> Criar Cenário ✨
                     </button>
                 </div>
 
                 <hr class="border-slate-200">
 
-                <!-- Tradução de Estrutura -->
                 <div class="space-y-4">
-                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Escrever para Traduzir:</label>
-                    <input type="text" id="translateInput" placeholder="Ex: Eu prefiro vinho" class="custom-input text-slate-700 bg-white shadow-sm font-medium">
-                    <button id="btnTranslate" onclick="handleAI('translate')" class="btn-teal w-full text-white font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center gap-2">
-                        <i class="fas fa-language"></i> Traduzir Estrutura ✨
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Escreva para Traduzir:</label>
+                    <input type="text" id="translateInput" placeholder="Ex: Eu prefiro vinho" class="custom-input text-slate-700 bg-white shadow-sm font-semibold uppercase text-xs">
+                    <button id="btnTranslate" onclick="handleAI('translate')" class="btn-teal w-full py-4 px-6 shadow-xl flex items-center justify-center gap-3">
+                        <i class="fas fa-language text-xl"></i> Traduzir Estrutura ✨
                     </button>
                 </div>
 
             </div>
 
-            <!-- Display Principal (O visor da direita) -->
             <div class="lg:col-span-2">
                 <div id="mainDisplay" class="main-display shadow-2xl transition-all duration-300">
-                    <div id="placeholderText" class="text-center max-w-md">
-                        <div class="text-5xl mb-6 opacity-20">🤟</div>
-                        <p class="text-lg font-medium opacity-60">Escolha uma ferramenta de IA para gerar conteúdo dinâmico.</p>
+                    <div id="placeholderText" class="text-center max-w-sm">
+                        <div class="text-7xl mb-8 opacity-10 grayscale">🤟</div>
+                        <p class="text-lg font-medium opacity-40 text-slate-300">Selecione uma ferramenta ao lado para gerar prática de Libras com IA.</p>
                     </div>
                     
                     <div id="loading" class="hidden flex-col items-center gap-6">
                         <div class="loader"></div>
-                        <p class="text-blue-400 font-bold tracking-widest uppercase text-xs">A IA está pensando...</p>
+                        <p class="text-blue-400 font-bold tracking-[0.3em] uppercase text-[10px]">A IA está sinalizando...</p>
                     </div>
                     
                     <div id="contentResult" class="ai-content hidden">
-                        <!-- Conteúdo da IA entra aqui -->
-                    </div>
+                        </div>
                 </div>
                 
-                <footer class="mt-6 flex justify-between items-center text-slate-400 text-[10px] uppercase tracking-[0.2em] px-2">
-                    <span>Derdic / PUC-SP</span>
+                <footer class="mt-6 flex justify-between items-center text-slate-400 text-[10px] uppercase tracking-[0.2em] px-4 font-black">
+                    <span>PUC-SP / Derdic</span>
                     <span>Semestre 1 - 2026</span>
                 </footer>
             </div>
@@ -176,7 +170,8 @@
     </div>
 
     <script>
-        const apiKey = ""; // A chave é injetada pelo ambiente.
+        // CHAVE API INSERIDA DIRETAMENTE
+        const apiKey = "AIzaSyBnooT-ANXOeZ6WFa78fsOHNftsq3rYX08"; 
 
         async function callGemini(prompt) {
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
@@ -184,26 +179,24 @@
             const payload = {
                 contents: [{ parts: [{ text: prompt }] }],
                 systemInstruction: {
-                    parts: [{ text: "Você é um professor especialista em Libras (Língua Brasileira de Sinais). Sua tarefa é ajudar alunos a praticar. Ao traduzir frases do Português, use estritamente as estruturas SOV (Sujeito-Objeto-Verbo) ou OSV (Objeto-Sujeito-Verbo). Formate sua resposta em HTML limpo. Use <h2> para títulos e coloque cada linha de diálogo ou tradução dentro de um <div class='dialog-line'>. Para cada tradução, adicione uma etiqueta <span class='libras-tag'>ORDEM: XXX</span> indicando a estrutura usada. Não use blocos de código Markdown (```html), retorne apenas o HTML puro." }]
+                    parts: [{ text: "Você é um professor especialista em Libras (Língua Brasileira de Sinais). Sua missão é ajudar o aluno a pensar na gramática visual. Quando solicitado a traduzir ou criar diálogos, use SEMPRE as estruturas SOV (Sujeito-Objeto-Verbo) ou OSV (Objeto-Sujeito-Verbo). Formate a resposta estritamente em HTML puro. Use <h2> para títulos e <div class='dialog-line'> para cada frase. Sempre inclua uma etiqueta <span class='libras-tag'>ORDEM: XXX</span> para indicar a sintaxe da frase. Não use blocos de código Markdown (```html)." }]
                 }
             };
 
-            // Exponential backoff
-            const delays = [1000, 2000, 4000, 8000, 16000];
-            for (let i = 0; i <= delays.length; i++) {
+            // Tentativas automáticas em caso de erro de rede
+            const delays = [1000, 2000, 4000];
+            for (let i = 0; i < delays.length; i++) {
                 try {
                     const response = await fetch(url, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    if (!response.ok) throw new Error('API request failed');
+                    if (!response.ok) throw new Error();
                     const data = await response.json();
-                    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (!text) throw new Error('Empty response');
-                    return text;
+                    return data.candidates[0].content.parts[0].text;
                 } catch (e) {
-                    if (i === delays.length) throw e;
+                    if (i === delays.length - 1) throw e;
                     await new Promise(r => setTimeout(r, delays[i]));
                 }
             }
@@ -214,51 +207,47 @@
             const placeholder = document.getElementById('placeholderText');
             const loading = document.getElementById('loading');
             const result = document.getElementById('contentResult');
-            const buttons = [document.getElementById('btnDialogue'), document.getElementById('btnScenario'), document.getElementById('btnTranslate')];
+            const buttons = document.querySelectorAll('button');
 
-            // Bloquear botões enquanto carrega
+            // Bloqueia botões e mostra carregamento
             buttons.forEach(b => b.disabled = true);
-            
             placeholder.classList.add('hidden');
             result.classList.add('hidden');
             loading.classList.remove('hidden');
             display.classList.add('items-center', 'justify-center');
 
             const theme = document.getElementById('themeSelect').value;
-            const userInput = document.getElementById('translateInput').value;
+            const input = document.getElementById('translateInput').value;
 
             let prompt = "";
             if (type === 'dialogue') {
-                prompt = `Gere um diálogo curto (máximo 4 falas) sobre o tema "${theme}". Para cada fala, forneça o texto em Português e a tradução correspondente na estrutura de Libras (SOV ou OSV).`;
+                prompt = `Gere um diálogo curto (máximo 4 falas) sobre o tema "${theme}". Para cada frase em Português, dê a tradução para a estrutura de Libras (SOV ou OSV).`;
             } else if (type === 'scenario') {
-                prompt = `Crie um cenário prático (ex: numa recepção ou loja) sobre o tema "${theme}". Liste 3 frases em Português que o aluno deve saber e suas respectivas traduções para a estrutura de Libras.`;
+                prompt = `Crie um cenário prático (ex: numa recepção) sobre o tema "${theme}". Dê frases em Português e suas respectivas ordens gramaticais em Libras.`;
             } else if (type === 'translate') {
-                if (!userInput.trim()) {
-                    alert("Por favor, digite uma frase para que eu possa traduzir!");
+                if (!input.trim()) {
+                    alert("Professor, digite uma frase primeiro para eu traduzir!");
                     resetUI();
                     buttons.forEach(b => b.disabled = false);
                     return;
                 }
-                prompt = `Traduza a frase "${userInput}" para a estrutura de Libras (SOV ou OSV) e explique brevemente a lógica da ordem das palavras.`;
+                prompt = `Traduza a frase "${input}" para a gramática de Libras (SOV ou OSV) e explique resumidamente a lógica da ordem.`;
             }
 
             try {
-                const aiResponse = await callGemini(prompt);
-                
-                // Limpeza de possíveis blocos de Markdown que a IA possa enviar por engano
-                let cleanHtml = aiResponse.replace(/```html/g, '').replace(/```/g, '').trim();
-                
+                const response = await callGemini(prompt);
                 display.classList.remove('items-center', 'justify-center');
                 loading.classList.add('hidden');
                 result.classList.remove('hidden');
-                result.innerHTML = cleanHtml;
                 
+                // Limpeza de possíveis formatações Markdown da IA
+                const cleanHtml = response.replace(/```html/g, '').replace(/```/g, '').trim();
+                result.innerHTML = cleanHtml;
             } catch (error) {
-                console.error(error);
                 display.classList.add('items-center', 'justify-center');
                 loading.classList.add('hidden');
                 result.classList.remove('hidden');
-                result.innerHTML = `<div class="text-center"><p class="text-red-400 font-bold mb-2">Ops! Tivemos um problema na sinalização.</p><p class="text-slate-400 text-sm">Tente clicar no botão novamente.</p></div>`;
+                result.innerHTML = "<div class='text-center'><p class='text-red-500 font-bold'>Erro na conexão com a IA.</p><p class='text-slate-500 text-xs mt-2 italic uppercase'>Tente clicar no botão novamente.</p></div>";
             } finally {
                 buttons.forEach(b => b.disabled = false);
             }
