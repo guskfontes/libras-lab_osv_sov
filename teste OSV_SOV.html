@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laboratório de Prática de Libras - PUC-SP / Derdic">
+    <title>Laboratório de Prática ✨ - Libras</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #ffffff;
+            color: #334155;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .main-display {
+            background-color: #1e293b;
+            min-height: 500px;
+            border-radius: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #94a3b8;
+            position: relative;
+            overflow-y: auto;
+            border: 1px solid #334155;
+        }
+
+        .btn-purple { background-color: #5e5ce6; transition: all 0.2s; }
+        .btn-purple:hover { background-color: #4b49c7; transform: translateY(-1px); }
+
+        .btn-orange { background-color: #f7a21c; transition: all 0.2s; }
+        .btn-orange:hover { background-color: #e59116; transform: translateY(-1px); }
+
+        .btn-teal { background-color: #1db978; transition: all 0.2s; }
+        .btn-teal:hover { background-color: #18a369; transform: translateY(-1px); }
+
+        .custom-input {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .custom-input:focus {
+            outline: none;
+            border-color: #5e5ce6;
+            box-shadow: 0 0 0 3px rgba(94, 92, 230, 0.1);
+        }
+
+        /* Estilização da Resposta da IA */
+        .ai-content {
+            color: #f1f5f9;
+            width: 100%;
+            height: 100%;
+            text-align: left;
+        }
+        .ai-content h2 { color: #5e5ce6; font-weight: 700; margin-bottom: 1.5rem; font-size: 1.5rem; border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
+        .ai-content .dialog-line { margin-bottom: 1.25rem; border-left: 4px solid #5e5ce6; padding-left: 1rem; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; }
+        .ai-content .libras-tag { 
+            display: inline-block; 
+            background: #334155; 
+            color: #1db978; 
+            padding: 4px 10px; 
+            border-radius: 6px; 
+            font-size: 0.85rem; 
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* Loading Spinner */
+        .loader {
+            border: 4px solid #334155;
+            border-top: 4px solid #5e5ce6;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Melhorias para Mobile */
+        @media (max-width: 768px) {
+            .p-6 { padding: 1rem; }
+            .main-display { min-height: 400px; padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Título Principal -->
+        <header class="mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-[#5e5ce6] flex items-center gap-3">
+                <span class="border-l-4 border-[#5e5ce6] pl-4">Laboratório de Prática</span> ✨
+            </h1>
+            <p class="text-slate-400 mt-2 ml-5 text-sm uppercase tracking-widest font-semibold">Ensino Bilíngue - Libras</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 items-start">
+            
+            <!-- Sidebar de Ferramentas -->
+            <div class="space-y-8 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                
+                <!-- Tema -->
+                <div>
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Tema do Exercício:</label>
+                    <select id="themeSelect" class="custom-input bg-white font-semibold text-slate-700 shadow-sm">
+                        <option value="Cores Primárias">Cores Primárias</option>
+                        <option value="Família e Parentesco">Família e Parentesco</option>
+                        <option value="Saudações e Apresentação">Saudações e Apresentação</option>
+                        <option value="Meios de Transporte">Meios de Transporte</option>
+                        <option value="Alimentos e Bebidas">Alimentos e Bebidas</option>
+                        <option value="Profissões">Profissões</option>
+                        <option value="Calendário e Datas">Calendário e Datas</option>
+                    </select>
+                </div>
+
+                <!-- Botões de Geração -->
+                <div class="space-y-4">
+                    <button onclick="handleAI('dialogue')" class="btn-purple w-full text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-purple-200 flex items-center justify-center gap-2">
+                        <i class="fas fa-comments text-lg"></i> Gerar Novo Diálogo ✨
+                    </button>
+
+                    <button onclick="handleAI('scenario')" class="btn-orange w-full text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-orange-100 flex items-center justify-center gap-2">
+                        <i class="fas fa-image text-lg"></i> Criar Cenário ✨
+                    </button>
+                </div>
+
+                <hr class="border-slate-200">
+
+                <!-- Tradução de Estrutura -->
+                <div class="space-y-4">
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Tradutor de Estrutura:</label>
+                    <input type="text" id="translateInput" placeholder="Ex: Eu prefiro vinho" class="custom-input text-slate-700 bg-white shadow-sm font-medium">
+                    <button onclick="handleAI('translate')" class="btn-teal w-full text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-emerald-100 flex items-center justify-center gap-2">
+                        <i class="fas fa-language text-lg"></i> Traduzir Estrutura ✨
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Display Principal -->
+            <div class="lg:col-span-2">
+                <div id="mainDisplay" class="main-display shadow-2xl transition-all duration-300">
+                    <div id="placeholderText" class="text-center max-w-md">
+                        <div class="text-5xl mb-6 opacity-20">🤟</div>
+                        <p class="text-lg font-medium opacity-60">Escolha uma ferramenta ao lado para gerar conteúdo dinâmico em Libras.</p>
+                    </div>
+                    
+                    <div id="loading" class="hidden flex-col items-center gap-6">
+                        <div class="loader"></div>
+                        <p class="text-blue-400 font-bold tracking-widest uppercase text-xs">Gerando Prática com IA...</p>
+                    </div>
+                    
+                    <div id="contentResult" class="ai-content hidden animate-fade-in">
+                        <!-- Conteúdo da IA entra aqui -->
+                    </div>
+                </div>
+                
+                <footer class="mt-6 flex justify-between items-center text-slate-400 text-[10px] uppercase tracking-[0.2em] px-2">
+                    <span>PUC-SP / Derdic</span>
+                    <span>Semestre 1 - 2026</span>
+                </footer>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const apiKey = ""; // Chave fornecida pelo ambiente
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'libras-lab-github';
+
+        async function callGemini(prompt) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: {
+                    parts: [{ text: "Você é um especialista em Libras (Língua Brasileira de Sinais). Ajude alunos a praticar. Ao traduzir frases, use estritamente estruturas SOV (Sujeito-Objeto-Verbo) ou OSV (Objeto-Sujeito-Verbo). Formate a resposta em HTML simples (sem as tags html/body), usando <h2> para títulos e <div> com classe 'dialog-line' para frases. Sempre indique a estrutura utilizada em uma tag de destaque: <span class='libras-tag'>ORDEM: XXX</span>." }]
+                }
+            };
+
+            for (let i = 0; i < 5; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error('API Error');
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text;
+                } catch (e) {
+                    await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
+                }
+            }
+            throw new Error("Falha ao conectar.");
+        }
+
+        async function handleAI(type) {
+            const display = document.getElementById('mainDisplay');
+            const placeholder = document.getElementById('placeholderText');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('contentResult');
+
+            placeholder.classList.add('hidden');
+            result.classList.add('hidden');
+            loading.classList.remove('hidden');
+            display.classList.add('items-center', 'justify-center');
+
+            const theme = document.getElementById('themeSelect').value;
+            const userInput = document.getElementById('translateInput').value;
+
+            let prompt = "";
+            if (type === 'dialogue') {
+                prompt = `Gere um diálogo curto entre duas pessoas sobre o tema: ${theme}. Para cada frase, mostre o Português e abaixo a estrutura de Libras (SOV ou OSV).`;
+            } else if (type === 'scenario') {
+                prompt = `Crie um cenário de prática real (ex: no mercado, no hospital) sobre o tema: ${theme}. Dê 3 frases em Português para o aluno tentar traduzir e logo abaixo a resposta correta em estrutura de Libras.`;
+            } else if (type === 'translate') {
+                if (!userInput) {
+                    alert("Digite uma frase primeiro.");
+                    resetUI();
+                    return;
+                }
+                prompt = `Traduza para Libras (SOV ou OSV): "${userInput}". Explique brevemente a escolha da ordem.`;
+            }
+
+            try {
+                const aiResponse = await callGemini(prompt);
+                display.classList.remove('items-center', 'justify-center');
+                loading.classList.add('hidden');
+                result.classList.remove('hidden');
+                
+                const cleanHtml = aiResponse.replace(/```html/g, '').replace(/```/g, '');
+                result.innerHTML = cleanHtml;
+            } catch (error) {
+                result.innerHTML = `<p class="text-red-400 font-bold">Erro de conexão. Tente novamente em instantes.</p>`;
+                loading.classList.add('hidden');
+                result.classList.remove('hidden');
+            }
+        }
+
+        function resetUI() {
+            document.getElementById('placeholderText').classList.remove('hidden');
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('contentResult').classList.add('hidden');
+            document.getElementById('mainDisplay').classList.add('items-center', 'justify-center');
+        }
+
+        // Atalho Enter no input
+        document.getElementById('translateInput').addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') handleAI('translate');
+        });
+    </script>
+</body>
+</html>
